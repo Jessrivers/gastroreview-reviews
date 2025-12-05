@@ -1,0 +1,70 @@
+type Query {
+    reviews(restaurantId: ID!): [Review]
+    reviewById(id: ID!): Review
+    myFavoriteRestaurants: [FavoriteRestaurant]
+    myFavoriteReviews: [FavoriteReview]
+}
+
+type Mutation {
+    createReview(input: ReviewInput!): Review
+    addReviewImage(reviewId: ID!, imageUrl: String!): ReviewImage
+    addFavoriteRestaurant(restaurantId: ID!): FavoriteRestaurant
+    removeFavoriteRestaurant(restaurantId: ID!): Boolean
+    addFavoriteReview(reviewId: ID!): FavoriteReview
+    removeFavoriteReview(reviewId: ID!): Boolean
+}
+
+type Review {
+    id: ID!
+    userId: ID!
+    restaurantId: ID!
+    rating: Int!
+    comment: String
+    sentimentScore: Float
+    sentimentLabel: String
+    createdAt: String!
+    user: User
+    restaurant: Restaurant
+    images: [ReviewImage]
+}
+
+type ReviewImage {
+    id: ID!
+    reviewId: ID!
+    imageUrl: String!
+    moderationStatus: String
+    uploadedAt: String!
+}
+
+type FavoriteRestaurant {
+    userId: ID!
+    restaurantId: ID!
+    createdAt: String!
+    restaurant: Restaurant
+}
+
+type FavoriteReview {
+    userId: ID!
+    reviewId: ID!
+    createdAt: String!
+    review: Review
+}
+
+type User {
+    id: ID!
+    email: String!
+    name: String
+}
+
+type Restaurant {
+    id: ID!
+    name: String!
+    description: String
+    rating: Float
+}
+
+input ReviewInput {
+    restaurantId: ID!
+    rating: Int!
+    comment: String
+}
