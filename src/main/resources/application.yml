@@ -5,7 +5,7 @@ spring:
   application:
     name: reviews-service
   datasource:
-    url: jdbc:${DATABASE_URL:postgresql://localhost:5432/reviews}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/reviews}
     username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver

@@ -35,6 +35,9 @@ public class ReviewService {
     private AzureContentModeratorService contentModeratorService;
 
     public List<Review> getReviewsByRestaurant(UUID restaurantId) {
+        if (restaurantId == null) {
+            return reviewRepository.findAll();
+        }
         return reviewRepository.findByRestaurantIdOrderByCreatedAtDesc(restaurantId);
     }
 
@@ -45,21 +48,7 @@ public class ReviewService {
 
     @Transactional
     public Review createReview(UUID userId, UUID restaurantId, Integer rating, String comment) {
-        // Validate user exists (call to users-service)
-        try {
-            userServiceClient.getUserById(userId);
-        } catch (Exception e) {
-            throw new RuntimeException("User not found");
-        }
-
-        // Validate restaurant exists (call to restaurants-service)
-        try {
-            restaurantServiceClient.getRestaurantById(restaurantId);
-        } catch (Exception e) {
-            throw new RuntimeException("Restaurant not found");
-        }
-
-        // Analyze sentiment using Azure Text Analytics (Cognitive Service #1)
+        // Analyze sentiment using Azure Text Analytics
         AzureTextAnalyticsService.SentimentResult sentiment =
             textAnalyticsService.analyzeSentiment(comment);
 

@@ -1,5 +1,5 @@
 type Query {
-    reviews(restaurantId: ID!): [Review]
+    reviews(restaurantId: ID): [Review]
     reviewById(id: ID!): Review
     myFavoriteRestaurants: [FavoriteRestaurant]
     myFavoriteReviews: [FavoriteReview]

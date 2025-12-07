@@ -33,6 +33,9 @@ public class ReviewGraphqlController {
 
     @QueryMapping
     public List<Review> reviews(@Argument String restaurantId) {
+        if (restaurantId == null) {
+            return reviewService.getReviewsByRestaurant(null);
+        }
         return reviewService.getReviewsByRestaurant(UUID.fromString(restaurantId));
     }
 
